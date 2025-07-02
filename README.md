@@ -10,6 +10,8 @@ The `single_drone_flight` package demonstrates basic autonomous flight capabilit
 - Climbing to target altitude (5 meters)
 - Position holding at target altitude
 
+The package provides both **Python** and **C++** implementations of the flight controller, allowing you to choose based on your preference or requirements.
+
 ## Prerequisites
 
 Before running this package, ensure you have:
@@ -49,18 +51,28 @@ Before running this package, ensure you have:
 
 ## Usage
 
-### Method 1: Using Launch File (Recommended)
-Run the complete system with one command:
+### Method 1: Using Launch Files (Recommended)
+
+#### Python Controller (Default)
+Run the complete system with Python controller:
 ```bash
 ros2 launch single_drone_flight single_drone_flight.launch.py
 ```
 
-This will:
+#### C++ Controller
+Run the complete system with C++ controller:
+```bash
+ros2 launch single_drone_flight single_drone_flight_cpp.launch.py
+```
+
+Both launch files will:
 1. Start the simulation components (MicroXRCE-DDS Agent and PX4 SITL)
-2. Wait 15 seconds for startup
-3. Launch the autonomous flight control
+2. Wait 30 seconds for startup and stabilization
+3. Launch the respective flight control implementation
 
 ### Method 2: Manual Step-by-Step
+
+#### For Python Controller
 
 1. **Start Simulation Components:**
    ```bash
@@ -69,16 +81,32 @@ This will:
 
 2. **Wait for PX4 to boot** (look for "Ready for takeoff!" message in PX4 terminal)
 
-3. **Start Flight Control:**
+3. **Start Python Flight Control:**
    ```bash
    ros2 run single_drone_flight single_drone_control
    ```
 
+#### For C++ Controller
+
+1. **Start Simulation Components:**
+   ```bash
+   ros2 run single_drone_flight simulation_launcher
+   ```
+
+2. **Wait for PX4 to boot** (look for "Ready for takeoff!" message in PX4 terminal)
+
+3. **Start C++ Flight Control:**
+   ```bash
+   ros2 run single_drone_flight single_drone_control_cpp
+   ```
+
 ## Package Contents
 
-- **`single_drone_control.py`**: Main autonomous flight control node
+- **`single_drone_control.py`**: Python implementation of autonomous flight control node
+- **`single_drone_control_cpp`**: C++ implementation of autonomous flight control node
 - **`simulation_launcher.py`**: Launches PX4 SITL and MicroXRCE-DDS Agent
-- **`single_drone_flight.launch.py`**: Coordinated launch file
+- **`single_drone_flight.launch.py`**: Coordinated launch file for Python controller
+- **`single_drone_flight_cpp.launch.py`**: Coordinated launch file for C++ controller
 
 ## Flight Behavior
 
@@ -178,14 +206,26 @@ This script will:
    ```bash
    cd /home/krish/flying_single_drone_ws
    source install/setup.bash
+   
+   # For Python controller:
    ros2 run single_drone_flight single_drone_control
+   
+   # OR for C++ controller:
+   ros2 run single_drone_flight single_drone_control_cpp
    ```
 
 ## Customization
 
+### Python Controller
 To modify the target altitude, edit the `target_altitude` variable in `single_drone_control.py`:
 ```python
 self.target_altitude = -5.0  # Change this value (negative for up in NED frame)
+```
+
+### C++ Controller
+To modify the target altitude, edit the `target_altitude_` variable in `SingleDroneControl.cpp`:
+```cpp
+target_altitude_ = -5.0f;  // Change this value (negative for up in NED frame)
 ```
 
 ## Based On

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
 """
-Launch file for Single Drone Flight
+Launch file for Single Drone Flight - C++ Version
 
-This launch file starts both the simulation and the flight control.
-Use this for a complete autonomous flight demonstration.
+This launch file starts both the simulation and the C++ flight control.
+Use this for a complete autonomous flight demonstration with C++ implementation.
 """
 
 from launch import LaunchDescription
@@ -25,15 +25,15 @@ def generate_launch_description():
             output='screen'
         ),
         
-        # Wait 30 seconds for simulation to start up and stabilize, then launch flight control
+        # Wait 30 seconds for simulation to start up and stabilize, then launch C++ flight control
         TimerAction(
             period=30.0,
             actions=[
                 Node(
                     package='single_drone_flight',
                     namespace='single_drone_flight',
-                    executable='single_drone_control.py',
-                    name='single_drone_control',
+                    executable='single_drone_control_cpp',
+                    name='single_drone_control_cpp',
                     output='screen'
                 )
             ]
