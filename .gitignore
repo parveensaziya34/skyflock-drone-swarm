@@ -108,3 +108,5 @@ launch.log
 # Node specific temporary files
 *.pid
 *.sock
+
+src/px4_msgs/
