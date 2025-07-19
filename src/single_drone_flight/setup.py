@@ -7,7 +7,7 @@ package_name = 'single_drone_flight'
 setup(
     name=package_name,
     version='1.0.0',
-    packages=[package_name],
+    packages=[],  # No Python packages to install
     data_files=[
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
@@ -23,8 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-                'single_drone_control = single_drone_flight.single_drone_control:main',
-                'simulation_launcher = single_drone_flight.simulation_launcher:main'
+                # Scripts are installed directly via CMakeLists.txt
         ],
     },
 )

@@ -16,7 +16,7 @@ find_package(geometry_msgs REQUIRED)
 include_directories(include)
 
 # C++ executable
-add_executable(single_drone_control_cpp src/SingleDroneControl.cpp)
+add_executable(single_drone_control_cpp controller/SingleDroneControl.cpp)
 ament_target_dependencies(single_drone_control_cpp rclcpp px4_msgs geometry_msgs)
 
 install(TARGETS
@@ -35,13 +35,10 @@ if (BUILD_TESTING)
     ament_lint_auto_find_test_dependencies()
 endif ()
 
-# Install Python packages
-ament_python_install_package(${PROJECT_NAME})
-
-# Install Python executables
+# Install Python executables directly from controller directory
 install(PROGRAMS 
-        ${PROJECT_NAME}/single_drone_control.py
-        ${PROJECT_NAME}/simulation_launcher.py
+        controller/single_drone_control.py
+        controller/simulation_launcher.py
         DESTINATION lib/${PROJECT_NAME})
 
 # Install launch files
